@@ -1,11 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StorageApi.Models
+namespace StorageApi.DTOs
 {
-    public class Products
+    public class CreateProductDto
     {
-        public int Id { get; set; }
-
         [Required] // Runtime required constraint (at program execution and object lifetime)
         public required string Name { get; set; }  // Compile-time required constraint (at build and object creation)
 
