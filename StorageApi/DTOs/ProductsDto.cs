@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StorageApi.DTOs
+namespace StorageApi.Models
 {
-    public record CreateProductDto
+    public record ProductsDto
     (
+        [Required]
+        [StringLength(4000, MinimumLength = 1)]
+        int Id,
+
         [Required] // Runtime required constraint (at program execution and object lifetime)
         [StringLength(200, MinimumLength = 1)]
         string Name,
@@ -26,9 +30,10 @@ namespace StorageApi.DTOs
         [StringLength(4000, MinimumLength = 1)] // The StringLength attribute only validates when the value is not null
         string? Description = null
     );
-
-    //public class CreateProductDto
+    //public class ProductDto
     //{
+    //    public int Id { get; set; }
+
     //    [Required] // Runtime required constraint (at program execution and object lifetime)
     //    [StringLength(200, MinimumLength = 1)]
     //    public required string Name { get; set; }  // Compile-time required constraint (at build and object creation)
@@ -44,12 +49,9 @@ namespace StorageApi.DTOs
     //    [StringLength(100, MinimumLength = 1)]
     //    public required string Shelf { get; set; }
 
-    //    [Required]
-    //    [Range(1, 100000)]
     //    public int Count { get; set; }
 
-    //    [Required]
-    //    [StringLength(4000, MinimumLength = 1)]
-    //    public required string Description { get; set; }
+    //    [StringLength(4000, MinimumLength = 1)] // The StringLength attribute only validates when the value is not null
+    //    public string? Description { get; set; }
     //}
 }

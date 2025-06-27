@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using StorageApi.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-    public class StorageContext : DbContext
+public class StorageContext : DbContext
+{
+    public StorageContext(DbContextOptions<StorageContext> options)
+        : base(options)
     {
-        public StorageContext (DbContextOptions<StorageContext> options)
-            : base(options)
-        {
-        }
-
-        public DbSet<StorageApi.Models.Products> Products { get; set; } = default!;
     }
+
+    public DbSet<StorageApi.Models.Products> Products { get; set; } = default!;
+}
