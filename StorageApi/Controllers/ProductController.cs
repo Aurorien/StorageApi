@@ -16,14 +16,7 @@ namespace StorageApi.Controllers
             _context = context;
         }
 
-        //// GET: api/Products
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Products>>> GetProducts()
-        //{
-        //    return await _context.Products.ToListAsync();
-        //}
-
-        // GET: api/ProductsDto
+        // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductsDto>>> GetProducts()
         {
