@@ -22,9 +22,8 @@ namespace StorageApi.DTOs
         [Range(1, 100000)]
         int Count,
 
-        [Required]
         [StringLength(4000, MinimumLength = 1)]
-        string Description
+        string? Description = null
     );
 
     //public class UpdatePutProductDto
