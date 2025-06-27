@@ -16,6 +16,30 @@ namespace StorageApi.Controllers
             _context = context;
         }
 
+        // GET: api/Products/stats
+        [HttpGet("stats")]
+        public async Task<ActionResult<ProductStatsDto>> GetProductStats()
+        {
+            var products = await _context.Products.ToListAsync();
+
+            if (!products.Any())
+            {
+                return Ok(new ProductStatsDto(0, 0, 0m));
+            }
+
+            var totaltAmountOfProducts = products.Count;
+            var totaltStorageValue = products.Sum(p => p.Price * p.Count);
+            var averagePrice = (decimal)products.Average(p => p.Price);
+
+            var stats = new ProductStatsDto(
+                totaltAmountOfProducts,
+                totaltStorageValue,
+                averagePrice
+            );
+
+            return Ok(stats);
+        }
+
         // GET: api/Products
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductsDto>>> GetProducts()
