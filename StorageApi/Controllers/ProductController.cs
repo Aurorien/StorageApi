@@ -95,17 +95,29 @@ namespace StorageApi.Controllers
             return Ok(products);
         }
 
-        // PUT: api/Products/5
+
+        // PUT: api/products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<UpdatePutProductDto>> PutProduct(int id, ProductsDto product)
+        public async Task<ActionResult<UpdatePutProductDto>> PutProduct(int id, UpdatePutProductDto product)
         {
-            if (id != product.Id)
+            if (!ProductExists(id))
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            var existingProduct = await _context.Products.FindAsync(id);
+            if (existingProduct == null)
+            {
+                return NotFound();
+            }
+
+            existingProduct.Name = product.Name;
+            existingProduct.Price = product.Price;
+            existingProduct.Category = product.Category;
+            existingProduct.Shelf = product.Shelf;
+            existingProduct.Count = product.Count;
+            existingProduct.Description = product.Description;
 
             try
             {
@@ -113,7 +125,7 @@ namespace StorageApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductsExists(id))
+                if (!ProductExists(id))
                 {
                     return NotFound();
                 }
