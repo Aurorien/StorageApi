@@ -4,6 +4,7 @@ namespace StorageApi.Models
 {
     public class Products // Keep it as a class (not a record as the DTOs). Entity classes work better with Entity Framework because EF needs to mutate properties for change tracking, while records are designed to be immutable and would require creating new instances instead of modifying existing ones.
     {
+        [Range(1, int.MaxValue)]
         public int Id { get; set; }
 
         [Required] // Runtime required constraint (at program execution and object lifetime)

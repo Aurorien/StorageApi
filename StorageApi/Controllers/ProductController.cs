@@ -16,9 +16,9 @@ namespace StorageApi.Controllers
             _context = context;
         }
 
-        // GET: api/Products/stats
+        // GET: api/products/stats
         [HttpGet("stats")]
-        public async Task<ActionResult<ProductStatsDto>> GetProductStats()
+        public async Task<ActionResult<ProductStatsDto>> GetProductsStats()
         {
             var products = await _context.Products.ToListAsync();
 
@@ -72,20 +72,23 @@ namespace StorageApi.Controllers
                 .ToListAsync());
         }
 
-        // GET: api/Products/5
+
+        // GET: api/products/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ProductsDto>> GetProducts(int id)
+        public async Task<ActionResult<ProductsDto>> GetProduct(int id)
         {
-            var products = await _context.Products.Where(p => p.Id == id).Select(p => new ProductsDto
-            (
-                p.Id,
-                p.Name,
-                p.Price,
-                p.Category,
-                p.Shelf,
-                p.Count,
-                p.Description
-            )).ToListAsync();
+            var products = await _context.Products
+                .Where(p => p.Id == id)
+                .Select(p => new ProductsDto(
+                 p.Id,
+                 p.Name,
+                 p.Price,
+                 p.Category,
+                 p.Shelf,
+                 p.Count,
+                 p.Description
+                 ))
+                .ToListAsync();
 
             if (products == null)
             {
@@ -138,7 +141,8 @@ namespace StorageApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+
+        // POST: api/products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<CreateProductDto>> PostProduct(CreateProductDto createProduct)
@@ -165,9 +169,10 @@ namespace StorageApi.Controllers
             return CreatedAtAction("GetProducts", products);
         }
 
-        // DELETE: api/Products/5
+
+        // DELETE: api/products/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProducts(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
             var products = await _context.Products.FindAsync(id);
             if (products == null)
@@ -181,7 +186,7 @@ namespace StorageApi.Controllers
             return NoContent();
         }
 
-        private bool ProductsExists(int id)
+        private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
         }

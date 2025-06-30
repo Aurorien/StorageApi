@@ -5,7 +5,7 @@ namespace StorageApi.Models
     public record ProductsDto
     (
         [Required]
-        [StringLength(4000, MinimumLength = 1)]
+        [Range(1, int.MaxValue)]
         int Id,
 
         [Required] // Runtime required constraint (at program execution and object lifetime)
