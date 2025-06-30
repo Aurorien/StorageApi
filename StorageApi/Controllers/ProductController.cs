@@ -40,11 +40,27 @@ namespace StorageApi.Controllers
             return Ok(stats);
         }
 
-        // GET: api/Products
+        // GET: api/products?category=&name=
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductsDto>>> GetProducts()
+
+        public async Task<ActionResult<IEnumerable<ProductsDto>>> GetProducts(string? category, string? name)
         {
-            return Ok(await _context.Products.Select(p => new ProductsDto(
+
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(category))
+            {
+                query = query.Where(p => p.Category.ToLower() == category.Trim().ToLower());
+            }
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                query = query.Where(p => p.Name.ToLower() == name.Trim().ToLower());
+            }
+
+
+            return Ok(await query
+                .Select(p => new ProductsDto(
                  p.Id,
                  p.Name,
                  p.Price,
@@ -52,7 +68,8 @@ namespace StorageApi.Controllers
                  p.Shelf,
                  p.Count,
                  p.Description
-                 )).ToListAsync());
+                 ))
+                .ToListAsync());
         }
 
         // GET: api/Products/5
