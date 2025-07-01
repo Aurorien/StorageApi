@@ -109,7 +109,10 @@ namespace StorageApi.Controllers
                 return NotFound();
             }
 
-            var existingProduct = await _context.Products.FindAsync(id);
+            var existingProduct = await _context.Products
+                .Include(e => e.Id == id)
+                .FirstOrDefaultAsync();
+
             if (existingProduct == null)
             {
                 return NotFound();
@@ -170,7 +173,7 @@ namespace StorageApi.Controllers
             _context.Products.Add(products);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProducts", products);
+            return CreatedAtAction(nameof(GetProducts), products);
         }
 
 
