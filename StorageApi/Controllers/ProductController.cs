@@ -126,7 +126,7 @@ namespace StorageApi.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 if (!ProductExists(id))
                 {
@@ -134,7 +134,11 @@ namespace StorageApi.Controllers
                 }
                 else
                 {
-                    throw;
+                    return Conflict(new
+                    {
+                        Message = "Product was updated by another user",
+                        Error = ex.Message
+                    });
                 }
             }
 
