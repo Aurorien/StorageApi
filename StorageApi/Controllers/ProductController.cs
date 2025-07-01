@@ -69,7 +69,7 @@ namespace StorageApi.Controllers
                  p.Count,
                  p.Description
                  ))
-                .ToListAsync());
+                .FirstOrDefaultAsync());
         }
 
 
@@ -88,7 +88,7 @@ namespace StorageApi.Controllers
                  p.Count,
                  p.Description
                  ))
-                .ToListAsync();
+                .FirstOrDefaultAsync();
 
             if (products == null)
             {
