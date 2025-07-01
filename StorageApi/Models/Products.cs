@@ -7,22 +7,18 @@ namespace StorageApi.Models
         [Range(1, int.MaxValue)]
         public int Id { get; set; }
 
-        [Required] // Runtime required constraint (at program execution and object lifetime)
         [StringLength(200, MinimumLength = 1)]
-        public required string Name { get; set; }  // Compile-time required constraint (at build and object creation)
+        public string Name { get; set; } = null!;
 
         [Range(0, 500000)]
         public int Price { get; set; }
 
-        [Required]
         [StringLength(200, MinimumLength = 1)]
-        public required string Category { get; set; }
+        public string Category { get; set; } = null!;
 
-        [Required]
         [StringLength(100, MinimumLength = 1)]
-        public required string Shelf { get; set; }
+        public string Shelf { get; set; } = null!;
 
-        [Required]
         [Range(1, 100000)]
         public int Count { get; set; }
 
